@@ -1,3 +1,6 @@
+#Final Code
+
+
 import numpy as np
 import timeit
 import matplotlib.pyplot as plt
@@ -115,7 +118,7 @@ def bucket_sort(arr):
     range_of_values = max_value - min_value
 
     # Define the number of buckets
-    num_buckets = len(arr) 
+    num_buckets = len(arr)  # Adjust the number of buckets as needed
 
     # Create buckets
     buckets = [[] for _ in range(num_buckets)]
@@ -187,6 +190,7 @@ def timsort(arr):
             end = min((start + size * 2 - 1), (n - 1))
             merge(arr, start, mid, end)
         size *= 2
+
     return arr
 
 # Generate input data for different scenarios
@@ -221,26 +225,26 @@ algorithms = {
     "Merge Sort": merge_sort,
     "Radix Sort": radix_sort,
     "Bucket Sort": bucket_sort,
-    "Timsort": timsort
+    "Tim Sort": timsort
 }
 
 input_generators = {
-    "Random Integers": generate_random_integers,
-    "Random Integers Range K": lambda n: generate_random_integers_range_k(n, 1000),
-    "Random Integers Cube": generate_random_integers_cube,
-    "Random Integers Log": generate_random_integers_log,
-    "Random Integers Multiple of 1000": generate_random_integers_multiple_of_1000,
-    "In Order with Swaps": generate_in_order_with_swaps
+    "Random Integers [0..n]": generate_random_integers,
+    "Random Integers in the range [0...k]": lambda n: generate_random_integers_range_k(n, 1000),
+    "Random Integers in the range [0...n^3]": generate_random_integers_cube,
+    "Random Integers in the range [0...log n]": generate_random_integers_log,
+    "Random Integers that are multiples of 1000 in the range[0...n]": generate_random_integers_multiple_of_1000,
+    "In Order Integers": generate_in_order_with_swaps
 }
 
 input_sizes = list(range(1000, 6000, 1000))
 
 for input_name, generate_input in input_generators.items():
     plt.figure(figsize=(10, 6))
-    plt.title(f"Performance of Sorting Algorithms for {input_name} Input")
+    plt.title(f"Performance of Sorting Algorithms for {input_name}")
     plt.xlabel("Input Size")
     plt.ylabel("Time (seconds)")
-    plt.xticks(input_sizes[::1])  
+    plt.xticks(input_sizes[::1])
     for algorithm_name, sorting_algorithm in algorithms.items():
         timings = []
         for input_size in input_sizes:
