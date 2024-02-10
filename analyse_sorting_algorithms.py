@@ -1,6 +1,3 @@
-#Final Code
-
-
 import numpy as np
 import timeit
 import matplotlib.pyplot as plt
@@ -118,7 +115,7 @@ def bucket_sort(arr):
     range_of_values = max_value - min_value
 
     # Define the number of buckets
-    num_buckets = len(arr)  # Adjust the number of buckets as needed
+    num_buckets = len(arr) 
 
     # Create buckets
     buckets = [[] for _ in range(num_buckets)]
@@ -237,9 +234,20 @@ input_generators = {
     "In Order Integers": generate_in_order_with_swaps
 }
 
-input_sizes = list(range(1000, 6000, 1000))
+input_sizes = list(range(10000,50000, 10000))
 
 for input_name, generate_input in input_generators.items():
+    print(f"Input: {input_name}")
+    for input_size in input_sizes:
+        print(f"  Input Size: {input_size}")
+        for algorithm_name, sorting_algorithm in algorithms.items():
+            arr = generate_input(input_size)
+            start_time = timeit.default_timer()
+            sorting_algorithm(arr.copy())
+            end_time = timeit.default_timer()
+            print(f"    {algorithm_name}: {end_time - start_time:.6f} seconds")
+    
+    # Plotting
     plt.figure(figsize=(10, 6))
     plt.title(f"Performance of Sorting Algorithms for {input_name}")
     plt.xlabel("Input Size")
@@ -249,8 +257,10 @@ for input_name, generate_input in input_generators.items():
         timings = []
         for input_size in input_sizes:
             arr = generate_input(input_size)
-            time_taken = timeit.timeit(lambda: sorting_algorithm(arr.copy()), number=1)
-            timings.append(time_taken)
+            start_time = timeit.default_timer()
+            sorting_algorithm(arr.copy())
+            end_time = timeit.default_timer()
+            timings.append(end_time - start_time)
         plt.plot(input_sizes, timings, label=algorithm_name)
     plt.legend()
     plt.grid(True)
